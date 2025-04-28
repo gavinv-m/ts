@@ -5,7 +5,7 @@ type Pizza = {
 
 type Order = {
   id: number;
-  status: string;
+  status: 'ordered' | 'completed';
   pizza: Pizza;
 };
 
