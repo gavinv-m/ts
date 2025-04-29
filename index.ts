@@ -6,8 +6,8 @@ type Pizza = {
 
 type Order = {
   id: number;
-  status: 'ordered' | 'completed';
   pizza: Pizza;
+  status: 'ordered' | 'completed';
 };
 
 const menu: Pizza[] = [
@@ -51,12 +51,30 @@ function completeOrder(orderId: number) {
   return order;
 }
 
+export function getPizzaDetail(identifier: string | number) {
+  if (typeof identifier === 'string') {
+    return menu.find(
+      (pizza) => pizza.name.toLowerCase() === identifier.toLowerCase()
+    );
+  } else if (typeof identifier === 'number') {
+    return menu.find((pizza) => pizza.id === identifier);
+  } else {
+    throw new TypeError(
+      'Parameter `identifier` must be either a string or a number'
+    );
+  }
+}
+
 addNewPizza({ id: 5, name: 'Chicken Bacon Ranch', price: 12 });
 addNewPizza({ id: 6, name: 'BBQ Chicken', price: 12 });
 addNewPizza({ id: 7, name: 'Spicy Sausage', price: 11 });
 
 placeOrder('Chicken Bacon Ranch');
+placeOrder('Pepperoni');
 completeOrder(1);
+placeOrder('Anchovy');
+placeOrder('Veggie');
+completeOrder(2);
 
 console.log('Menu:', menu);
 console.log('Cash in register:', cashInRegister);
